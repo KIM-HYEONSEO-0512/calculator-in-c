@@ -1,43 +1,67 @@
+//2026.11.12: ±âÃÊ »À´ë Àâ±â
+//2026.11.14: [1]¹è¿­ Å©±â ÃÊ°ú ¿À·ù ¼öÁ¤ (double enter[9]; => double enter[100];), [2]¹İº¹¹® break; Ãß°¡, [3]±âÁ¸ÀÇ ¸¶Áö¸· ¼ıÀÚ¸¸ °è»êµÇ´ø ¿À·ù¸¦ ´©Àû °è»êÀÌ result º¯¼ö¸¦ ÅëÇØ ´©Àû °è»êÀÌ µÇµµ·Ï ¼öÁ¤, [4]»çÄ¢¿¬»ê Àû¿ë
+
+#define _CRT_SECURE_NO_WARNINGS  //scanfµîÀ¸·Î ÀÎÇÑ °æ°í°¡ ¶ß´Â °ÍÀ» ¹«½ÃÇÏ±â À§ÇÑ ÄÚµå, https://shek.tistory.com/49
 #include <stdio.h>
 
 int main() {
-	double enter[9]; //ì‚¬ìš©ìì—ê²Œ ìˆ«ìë¥¼ ì…ë ¥ë°›ìŠµë‹ˆë‹¤.
-	char operator[9]; //ì‚¬ìš©ìì—ê²Œ ì—°ì‚°ìë¥¼ ì…ë ¥ë°›ìŠµë‹ˆë‹¤.
-	char equal='='; //ì‚¬ìš©ìì—ê²Œ ê²°ê³¼ë¥¼ ì¶œë ¥ í•˜ê¸° ìœ„í•´ ë“±í˜¸ë¥¼ ì…ë ¥ë°›ìŠµë‹ˆë‹¤.
-	double result; //ì‚¬ìš©ìì—ê²Œ ê²°ê³¼ë¥¼ ì¶œë ¥í•˜ê¸° ìœ„í•´ resultë¥¼ ì„ ì–¸í•©ë‹ˆë‹¤.
-	int count;
+    double enter[100];    // ¼ıÀÚµéÀ» ÀúÀåÇÒ ¹è¿­
+    char operator[100];   // ¿¬»êÀÚµéÀ» ÀúÀåÇÒ ¹è¿­
+    double result;
+    int count;
 
-	while (1) {
-		for (count = 0; count < 10; count++) { //ì‚¬ìš©ìì—ê²Œ ìˆ«ìë¥¼ ì…ë ¥ë°›ìŠµë‹ˆë‹¤. max 10ê°œê¹Œì§€.
-			scanf_s("%lf", &enter[count]);
-			scanf_s(" %c", &operator[count]);
-		}
+    while (1) {
+        printf("\n°è»ê ¼ö½ÄÀ» ÀÔ·ÂÇÏ¼¼¿ä (¿¹: 1 + 2 * 3 = ): \n");
 
-		int count3 = 0; //ìŠ¤íƒì— ì €ì¥ëœ ìˆ«ìì™€ ì—°ì‚°ìë¥¼ ë¶ˆëŸ¬ì˜¤ê¸° ìœ„í•´ countë¥¼ ì´ˆê¸°í™”í•˜ì—¬ ì¬ì‚¬ìš©í•©ë‹ˆë‹¤.
-		for (int count2 = 0; count2 < count; count2++) //ì‚¬ìš©ìê°€ ì…ë ¥í•œ ìˆ«ìì˜ ê°œìˆ˜ì¸ countë³´ë‹¤ ê°™ì•„ì§ˆë•Œ ê¹Œì§€ ì—°ì‚°í•©ë‹ˆë‹¤.
-		{
-			if (operator[count3] == '+') { 
-				result = enter[count2] + enter[count2 + 1];
-				count3++; //ê³„ì‚°í•  ë‹¤ìŒ ìˆ«ìì™€ ì—°ì‚°ìë¥¼ ê°€ì ¸ì˜¤ê¸° ìœ„í•´ ++
-			}
-			else if (operator[count3] == '-') {
-				result = enter[count2] - enter[count2 + 1];
-				count3++;
-			}
-			else if (operator[count3] == '*') {
-				result = enter[count2] * enter[count2 + 1];
-				count3++;
-			}
-			else if (operator[count3] == '/') {
-				result = enter[count2] / enter[count2 + 1];
-				count3++;
-			}
-			else if (operator[count3] == '=') {
-				printf("%lf\n", result);
-				break;
-			}
-		}
-	}
-	return 0;
+        // 1. = ÀÌ ³ª¿Ã ¶§±îÁö ÀÔ·Â¹Ş±â
+        for (count = 0; count < 100; count++) {
+            scanf("%lf", &enter[count]);
+            scanf(" %c", &operator[count]);
 
+            if (operator[count] == '=') {
+                break; 
+            }
+        }
+
+        // 2. °è»ê (¼öÁ¤±â·Ï 2-3, 2-4)
+        for (int i = 0; i < count; i++) {
+            if (operator[i] == '*' || operator[i] == '/') {
+                if (operator[i] == '*') {
+                    enter[i] = enter[i] * enter[i + 1];
+                }
+                else if (operator[i] == '/') {
+                    if (enter[i + 1] == 0) {
+                        printf("¿À·ù: 0À¸·Î ³ª´­ ¼ö ¾ø½À´Ï´Ù.\n");
+                        break;
+                    }
+                    enter[i] = enter[i] / enter[i + 1];
+                }
+
+                
+                for (int j = i; j < count - 1; j++) {
+                    enter[j + 1] = enter[j + 2];
+                    operator[j] = operator[j + 1];
+                }
+                count--; 
+                i--;     
+            }
+        }
+
+        
+        result = enter[0];
+
+        for (int i = 0; i < count; i++) {
+            if (operator[i] == '+') {
+                result = result + enter[i + 1];
+            }
+            else if (operator[i] == '-') {
+                result = result - enter[i + 1];
+            }
+        }
+
+        // 3. °á°ú Ãâ·Â
+		printf("°á°ú: %.15g\n", result); // ¸¸¾à ¼Ò¼öÁ¡ ¾Æ·¡ ¼ıÀÚ°¡ ÀÖ´Ù¸é ¼Ò¼öÁ¡ ÀÌÇÏ 15ÀÚ¸®±îÁö Ãâ·Â, ¾øÀ¸¸é Á¤¼ö¸¸ Ãâ·Â(%.15g)
+    }
+
+    return 0;
 }
