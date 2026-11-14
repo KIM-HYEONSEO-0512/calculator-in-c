@@ -14,21 +14,26 @@
 
 <br>
 
-### 👤 Profile
+## 👤 Profile
+
+
 
 * **Contact**: khs0512@cu.ac.kr
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<br>
 
-### 📌 Overview
+## 📌 Overview
+
+
 
 * **Topic**: A calculator program written in C
 * **Reason for Topic Selection**: Because it is an ideal program to build by making full use of the C programming skills learned during the freshman year
 * **Goal**: To create a calculator that provides not only basic arithmetic operations, but also scientific calculations and a GUI
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<br>
 
-### 💻 Languages & Tools
+## 💻 Languages & Tools
+
 
 | Category | Details |
 | :--- | :--- |
